@@ -20,7 +20,7 @@ const EventList = () => {
   useEffect(() => {
     console.log("membersState.memberList : use::");
   });
-
+  
   return (
     <div>
       {" "}
@@ -40,6 +40,8 @@ const EventList = () => {
           </thead>
           
             <tbody>
+              
+                
               {eventState.eventList.map((row, rowIndex) => {
                   const data = row.members.filter(member => member.value.toLowerCase().includes(applicationState.globalFilter.searchKey.toLowerCase()))
                   if(!applicationState.globalFilter.searchKey || data.length) {
@@ -66,11 +68,10 @@ const EventList = () => {
                         
                       </tr>
                     )
-                  } else {
-                    return (<tr><td colSpan="8">No Data found</td></tr>)
-                  }
+                  } 
                 
               })}
+              
               
             </tbody>
           
