@@ -4,9 +4,9 @@ table {
     width: 80%;
     border: 20px;
     margin: 50px;
-    height: 500px;
+    height: 600px;
     display: block;
-    overflow: scroll;
+    overflow: auto;
   }
   
   table td, table th {
@@ -26,3 +26,24 @@ table {
     background-color: #76a1e2;
     color: white;
   }
+
+  .container{
+    margin-top: 20px;
+  }
+  .search{
+    float: right;
+    margin-right: 400px;
+  }
+  .mem-tit{
+    align-items: center;
+    font-size: x-large;
+    font-weight: 500;
+    margin-left: 650px;
+  }
+  .eve-tit{
+    align-items: center;
+    font-size: x-large;
+    font-weight: 500;
+    margin-left: 650px;
+  }
+ 

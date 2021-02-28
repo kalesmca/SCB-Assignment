@@ -1,28 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteEvent } from "../redux/actions/event";
 import "./global.css";
-import { MEMBER_TITLE } from "../constants";
 
 const EventList = () => {
   const dispatch = useDispatch();
   const applicationState = useSelector((state) => state);
-  console.log("application state Event :", applicationState);
   const [eventState, setEventState] = useState({
     ...applicationState.events,
   });
   const [membersState, setMemberState] = useState({
     ...applicationState.members,
   });
-  console.log("Events :", MEMBER_TITLE);
 
   const deleteRow = (index) => {
-    console.log("deleteRow :", index);
     dispatch(deleteEvent(applicationState, membersState, index));
-  };
-
-  const dropDownChange = (value) => {
-    console.log("value::", value);
   };
 
   useEffect(() => {
@@ -32,7 +24,8 @@ const EventList = () => {
   return (
     <div>
       {" "}
-      Event List Rendered
+      <span className="eve-tit">Event List</span>
+      
       <div>
         <div></div>
         <table>
@@ -42,41 +35,88 @@ const EventList = () => {
                 return <th key={headerIndex}>{header.fieldName}</th>;
               })}
               <th>Members</th>
-              <th>Action</th>
+              
             </tr>
           </thead>
-          <tbody>
-            {eventState.eventList.map((row, rowIndex) => {
-              return (
-                <tr key={rowIndex}>
-                  {eventState.headerList.map((column, colmnId) => {
-                    return <td key={colmnId}>{row[column.key]}</td>;
-                  })}
-                  <td>
-                    {
-                      row.members && row.members.length && row.members.map((member, memberIndex) => {
-                        return (<span> <span>{member.value}</span> {row.members.length != memberIndex+1 && <span>, </span>} </span>)
-                      }) 
-                    }
-                    
-                  </td>
-                  <td>
-                    <span
-                      onClick={() => {
-                        deleteRow(rowIndex);
-                      }}
-                    >
-                      Delete
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
+          {!applicationState.globalFilter.isFilterApplied && (
+            <tbody>
+              {eventState.eventList.map((row, rowIndex) => {
+                return (
+                  <tr key={rowIndex}>
+                    {eventState.headerList.map((column, colmnId) => {
+                      return <td key={colmnId}>{row[column.key]}</td>;
+                    })}
+                    <td>
+                      {row.members &&
+                        row.members.length &&
+                        row.members.map((member, memberIndex) => {
+                          return (
+                            <span>
+                              {" "}
+                              <span>{member.value}</span>{" "}
+                              {row.members.length != memberIndex + 1 && (
+                                <span>, </span>
+                              )}{" "}
+                            </span>
+                          );
+                        })}
+                    </td>
+                    {/* <td>
+                      <span
+                        onClick={() => {
+                          deleteRow(rowIndex);
+                        }}
+                      >
+                        Delete
+                      </span>
+                    </td> */}
+                  </tr>
+                );
+              })}
+            </tbody>
+          )}
+
+          {applicationState.globalFilter.isFilterApplied && (
+            <tbody>
+              {applicationState.globalFilter.eventList.map((row, rowIndex) => {
+                return (
+                  <tr key={rowIndex}>
+                    {eventState.headerList.map((column, colmnId) => {
+                      return <td key={colmnId}>{row[column.key]}</td>;
+                    })}
+                    <td>
+                      {row.members &&
+                        row.members.length &&
+                        row.members.map((member, memberIndex) => {
+                          return (
+                            <span key={memberIndex}>
+                              {" "}
+                              <span>{member.value}</span>{" "}
+                              {row.members.length != memberIndex + 1 && (
+                                <span>, </span>
+                              )}{" "}
+                            </span>
+                          );
+                        })}
+                    </td>
+                    {/* <td>
+                      <span
+                        onClick={() => {
+                          deleteRow(rowIndex);
+                        }}
+                      >
+                        Delete
+                      </span>
+                    </td> */}
+                  </tr>
+                );
+              })}
+            </tbody>
+          )}
         </table>
       </div>
     </div>
   );
 };
 
-export default EventList;
+export default memo(EventList);

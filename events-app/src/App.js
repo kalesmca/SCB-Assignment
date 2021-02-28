@@ -6,7 +6,7 @@ import Root from './components/root';
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
+      <div >
         <Root />
       </div>
     </Provider>

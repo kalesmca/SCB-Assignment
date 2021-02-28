@@ -1,4 +1,4 @@
-import {GLOBAL_FILTER} from '../../constants';
+import {GLOBAL_FILTER, CLEAR_FILTER} from '../../constants';
 
 export const globalFilter = (appState, searchKeyword) => {
     let tempEventsState = {...appState.events}
@@ -21,4 +21,10 @@ export const globalFilter = (appState, searchKeyword) => {
         eventList
     }
     return {type: GLOBAL_FILTER, filteredObj}
+}
+
+export const clearFilter = (appState) => {
+    const filterState = {...appState.globalFilter}
+    filterState.isFilterApplied = false
+    return {type: CLEAR_FILTER, filterState}
 }
