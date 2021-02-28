@@ -4,14 +4,13 @@ import {DELETE_EVENTS, UPDATE_EVENTS} from '../../constants';
 const initialState = {
     eventList: MOCK_EVENTS,
     headerList: [
-        { fieldName: "Organizer", key: "organizer", sortingType : 'all' },
-        { fieldName: "About", key: "about" },
-        { fieldName: "Schedules For", key: "schedulesFor", sortingType : 'all' },
-        { fieldName: "Duration", key: "duration" },
         { fieldName: "Event Name ", key: "eventName" },
         { fieldName: "Capacity ", key: "capacity" },
         { fieldName: "Availability", key: "availability" },
-        
+        { fieldName: "Date", key: "date" },
+        { fieldName: "Organizer", key: "organizer", sortingType : 'all' },
+        { fieldName: "About", key: "about" },
+        { fieldName: "Schedules For", key: "schedulesFor", sortingType : 'all' },
       ]
 }
 
