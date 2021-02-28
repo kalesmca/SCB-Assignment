@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { globalFilter, clearFilter } from "../redux/actions/filter";
+import {
+  globalFilter,
+  clearFilter,
+  onChangeSearch,
+} from "../redux/actions/filter";
 
 import MemberList from "./memberList";
 import EventList from "./eventList";
@@ -22,28 +26,15 @@ export default function Root() {
       <div className="search">
         <input
           type="text"
-          value={searchKey}
+          value={applicationState.globalFilter.searchKey}
           placeholder="Search.."
           name="search2"
           onChange={(e) => {
-            setSearchKey(e.target.value);
+            dispatch(onChangeSearch(applicationState, e.target.value));
           }}
         />
-        <button
-          type="submit"
-          onClick={() => {
-            search();
-          }}
-        >
+        <button type="submit">
           <i class="fa fa-search"></i>
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            cancelFilter();
-          }}
-        >
-          x
         </button>
       </div>
       <MemberList />

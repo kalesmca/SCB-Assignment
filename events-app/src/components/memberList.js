@@ -73,74 +73,43 @@ const MemberList = () => {
               <th>Action</th>
             </tr>
           </thead>
-          {!applicationState.globalFilter.isFilterApplied && (
+         
             <tbody>
               {memberState.memberList.map((row, rowIndex) => {
-                return (
-                  <tr key={rowIndex}>
-                    {memberState.headerList.map((column, colmnId) => {
-                      return <td key={colmnId}>{row[column.key]}</td>;
-                    })}
-                    <td>
-                      <span>
-                        <MultiSelect
-                          options={options}
-                          value={row.events}
-                          onChange={(value) => {
-                            selectEvents(value, rowIndex);
+                  
+                if(!applicationState.globalFilter.searchKey || row.name.toLowerCase().includes(applicationState.globalFilter.searchKey.toLowerCase())){
+                  return (
+                    <tr key={rowIndex}>
+                      {memberState.headerList.map((column, colmnId) => {
+                        return <td key={colmnId}>{row[column.key]}</td>;
+                      })}
+                      <td>
+                        <span>
+                          <MultiSelect
+                            options={options}
+                            value={row.events}
+                            onChange={(value) => {
+                              selectEvents(value, rowIndex);
+                            }}
+                            labelledBy={"Select"}
+                          />
+                        </span>
+                      </td>
+                      <td>
+                        <span
+                          onClick={() => {
+                            deleteRow(rowIndex);
                           }}
-                          labelledBy={"Select"}
-                        />
-                      </span>
-                    </td>
-                    <td>
-                      <span
-                        onClick={() => {
-                          deleteRow(rowIndex);
-                        }}
-                      >
-                        Delete
-                      </span>
-                    </td>
-                  </tr>
-                );
+                        >
+                          Delete
+                        </span>
+                      </td>
+                    </tr>
+                  )
+                }
+                
               })}
             </tbody>
-          )}
-          {applicationState.globalFilter.isFilterApplied && (
-            <tbody>
-              {applicationState.globalFilter.memberList.map((row, rowIndex) => {
-                return (
-                  <tr key={rowIndex}>
-                    {memberState.headerList.map((column, colmnId) => {
-                      return <td key={colmnId}>{row[column.key]}</td>;
-                    })}
-                    <td>
-                      <span>
-                        <MultiSelect
-                          options={options}
-                          value={row.events}
-                          onChange={(value) => {
-                            selectEvents(value, rowIndex);
-                          }}
-                          labelledBy={"Select"}
-                        />
-                      </span>
-                    </td>
-                    <td>
-                      <span
-                        onClick={() => {
-                          deleteRow(rowIndex);
-                        }}
-                      >
-                        Delete
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          )}
         </table>
       </div>
     </div>
