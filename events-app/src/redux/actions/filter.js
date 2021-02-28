@@ -9,7 +9,6 @@ export const globalFilter = (appState, searchKeyword) => {
     tempEventsState.eventList.map((event) =>{
         let tmp = []
         tmp = event.members.filter(member => member.value.toLowerCase().includes(searchKeyword.toLocaleLowerCase()))
-        console.log('tmp:', tmp.length)
         if(tmp.length){
             eventList.push(event)
         }

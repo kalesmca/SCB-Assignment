@@ -8,7 +8,6 @@ const initialState = {
 }
 
 const filterReducer = (state=initialState, action) =>{
-    console.log('filter Reducer :', state, action)
     switch(action.type) {
         case GLOBAL_FILTER:
             return {...state, ...action.filteredObj}   

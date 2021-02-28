@@ -18,7 +18,6 @@ const initialState = {
 };
 
 const memberReducer = (state = initialState, action) => {
-  console.log("Members Reducer :", state, action);
   switch (action.type) {
     case DELETE_MEMBER:
       return { ...state, ...action.tempMemberState };
