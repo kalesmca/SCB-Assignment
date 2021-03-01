@@ -35,13 +35,21 @@ const MemberList = () => {
 
   const selectEvents = (value, index) => {
     let tmpObj = { ...memberState };
-    const newSelectedEvent = value.filter(
+    let newSelectedEvent = []; 
+    newSelectedEvent = value.filter(
       ({ value: id1 }) =>
         !tmpObj.memberList[index].events.some(({ value: id2 }) => id2 === id1)
     );
 
+    let deSelectedEvents = [];
+    deSelectedEvents = tmpObj.memberList[index].events.filter(
+      ({ value: id1 }) =>
+        !value.some(({ value: id2 }) => id2 === id1)
+    );
+
+
     dispatch(
-      AddEventsToMember(applicationState, index, newSelectedEvent, value)
+      AddEventsToMember(applicationState, index, newSelectedEvent, deSelectedEvents, value)
     );
   };
 

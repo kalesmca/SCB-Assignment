@@ -51,24 +51,50 @@ export const deleteMember = (appState, index) => {
     return {type: DELETE_MEMBER, tempMemberState}
 }
 
-export const AddEventsToMember = (appState, rowIndex, selectedEvent, eventList ) => {
-  // const dispatch = useDispatch()
+export const AddEventsToMember = (appState, rowIndex, selectedEvents, deSelectedEvents, eventList ) => {
+  
   let tempMemberState = {...appState.members}
   let tempEventsState = {...appState.events}
-  let eventIndex = tempEventsState.eventList.findIndex((e) => {
-    return e.id === selectedEvent[0].id
-  })
-  
-  if(eventIndex >= 0 && tempEventsState.eventList[eventIndex].availability) {
-    tempMemberState.memberList[rowIndex].events = eventList
-    if(tempEventsState.eventList[eventIndex].availability === 1 ){
-      tempEventsState.eventList[eventIndex].isDisabled = true
-    }
-    tempEventsState.eventList[eventIndex].availability = tempEventsState.eventList[eventIndex].availability-1
-    const memberObj = {label: tempMemberState.memberList[rowIndex].name,value: tempMemberState.memberList[rowIndex].name, id: tempMemberState.memberList[rowIndex].id}
-    tempEventsState.eventList[eventIndex].members.push(memberObj)
+  if(selectedEvents && selectedEvents.length) {
+    selectedEvents.map((selectedEvent) => {
+      let eventIndex = tempEventsState.eventList.findIndex((e) => {
+        return e.id === selectedEvent.id
+      })
+      if(eventIndex >= 0 && tempEventsState.eventList[eventIndex].availability) {
+        tempMemberState.memberList[rowIndex].events = eventList
+        if(tempEventsState.eventList[eventIndex].availability === 1 ){
+          tempEventsState.eventList[eventIndex].isDisabled = true
+        }
+        tempEventsState.eventList[eventIndex].availability = tempEventsState.eventList[eventIndex].availability-1
+        const memberObj = {label: tempMemberState.memberList[rowIndex].name,value: tempMemberState.memberList[rowIndex].name, id: tempMemberState.memberList[rowIndex].id}
+        tempEventsState.eventList[eventIndex].members.push(memberObj)
+        
+      }
+      
+    })
     updateEvents(tempEventsState)
+  } else {
+    deSelectedEvents.map((deSelectEvent) => {
+      let eventIndex = tempEventsState.eventList.findIndex((e) => {
+        return e.id === deSelectEvent.id
+      })
+      if(eventIndex >= 0) {
+        tempMemberState.memberList[rowIndex].events = eventList
+        
+        tempEventsState.eventList[eventIndex].isDisabled = false
+        tempEventsState.eventList[eventIndex].availability = tempEventsState.eventList[eventIndex].availability+1
+
+        const memberIndex = tempEventsState.eventList[eventIndex].members.findIndex(member => member.id === tempMemberState.memberList[rowIndex].id)
+
+        tempEventsState.eventList[eventIndex].members.splice(memberIndex, 1)
+        
+      }
+      
+    })
+    updateEvents(tempEventsState)
+
   }
+  
   return {type: UPDATE_MEMBERS, tempMemberState}
 
 }
